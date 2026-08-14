@@ -77,22 +77,23 @@ export default withMermaid(
           text: '🎨 前端',
           items: [
             { text: '📂 前端总览',      link: '/frontend/' },
-            { text: 'HTML / CSS',        link: '/frontend/html-css/' },
-            { text: 'JavaScript',        link: '/frontend/javascript/' },
-            { text: 'TypeScript',        link: '/frontend/typescript/' },
-            { text: 'Vue 3',             link: '/frontend/vue/' },
-            { text: 'React',             link: '/frontend/react/' },
-            { text: '工程化',            link: '/frontend/engineering/' },
+            { text: 'HTML / CSS',        link: '/frontend/html-css/html-css' },
+            { text: 'JavaScript',        link: '/frontend/javascript/javascript' },
+            { text: 'TypeScript',        link: '/frontend/typescript/typescript' },
+            { text: 'Vue 3',             link: '/frontend/vue/vue' },
+            { text: 'React',             link: '/frontend/react/react' },
+            { text: '工程化',            link: '/frontend/engineering/engineering' },
           ]
         },
         {
           text: '🧑‍💻 后端',
           items: [
             { text: '📂 后端总览',      link: '/backend/' },
-            { text: 'Node.js',           link: '/backend/nodejs/' },
-            { text: 'Go / Golang',       link: '/backend/golang/' },
-            { text: 'Python',            link: '/backend/python/' },
-            { text: '数据库',            link: '/backend/database/' },
+            { text: 'Node.js',           link: '/backend/nodejs/nodejs' },
+            { text: 'Go / Golang',       link: '/backend/golang/golang' },
+            { text: 'Java',              link: '/backend/java/java' },
+            { text: 'Python',            link: '/backend/python/python' },
+            { text: '数据库',            link: '/backend/database/mysql' },
           ]
         },
         {
@@ -100,31 +101,31 @@ export default withMermaid(
           items: [
             { text: '📂 客户端总览',    link: '/client/' },
             { text: '🍎 iOS 总览',      link: '/client/ios/' },
-            { text: '  └ Swift 语言',   link: '/client/ios/swift/' },
-            { text: '  └ UIKit',        link: '/client/ios/uikit/' },
-            { text: '  └ SwiftUI',      link: '/client/ios/swiftui/' },
-            { text: '  └ AVFoundation', link: '/client/ios/avfoundation/' },
-            { text: '  └ Metal',        link: '/client/ios/metal/' },
-            { text: '🤖 Android',       link: '/client/android/' },
+            { text: '  └ Swift 语言',   link: '/client/ios/swift/swift' },
+            { text: '  └ UIKit',        link: '/client/ios/uikit/uikit' },
+            { text: '  └ SwiftUI',      link: '/client/ios/swiftui/swiftui' },
+            { text: '  └ AVFoundation', link: '/client/ios/avfoundation/avfoundation' },
+            { text: '  └ Metal',        link: '/client/ios/metal/metal' },
+            { text: '🤖 Android',       link: '/client/android/android' },
           ]
         },
         {
           text: '💡 基础',
           items: [
             { text: '📂 基础总览',      link: '/basic/' },
-            { text: '操作系统',          link: '/basic/os/' },
-            { text: '计算机网络',        link: '/basic/network/' },
-            { text: '编译原理',          link: '/basic/principle/' },
-            { text: '设计模式',          link: '/basic/design-pattern/' },
+            { text: '操作系统',          link: '/basic/os/os' },
+            { text: '计算机网络',        link: '/basic/network/network' },
+            { text: '编译原理',          link: '/basic/principle/principle' },
+            { text: '设计模式',          link: '/basic/design-pattern/design-pattern' },
           ]
         },
         {
           text: '🔧 算法',
           items: [
             { text: '📂 算法总览',      link: '/algorithm/' },
-            { text: '数据结构基础',      link: '/algorithm/basics/' },
-            { text: 'LeetCode 题解',    link: '/algorithm/leetcode/' },
-            { text: '进阶算法',          link: '/algorithm/advance/' },
+            { text: '数据结构基础',      link: '/algorithm/basics/basics' },
+            { text: 'LeetCode 题解',    link: '/algorithm/leetcode/leetcode' },
+            { text: '进阶算法',          link: '/algorithm/advance/advance' },
           ]
         },
         {
@@ -152,43 +153,37 @@ export default withMermaid(
           {
             text: 'HTML / CSS',
             items: [
-              { text: '目录',      link: '/frontend/html-css/' },
-              { text: '01 基础',   link: '/frontend/html-css/01-basics' },
+              { text: 'HTML / CSS 笔记',   link: '/frontend/html-css/html-css' },
             ]
           },
           {
             text: 'JavaScript',
             items: [
-              { text: '目录',      link: '/frontend/javascript/' },
-              { text: '01 基础',   link: '/frontend/javascript/01-basics' },
+              { text: 'JavaScript 笔记',   link: '/frontend/javascript/javascript' },
             ]
           },
           {
             text: 'TypeScript',
             items: [
-              { text: '目录',      link: '/frontend/typescript/' },
-              { text: '01 类型',   link: '/frontend/typescript/01-types' },
+              { text: 'TypeScript 笔记',   link: '/frontend/typescript/typescript' },
             ]
           },
           {
             text: 'Vue 3',
             items: [
-              { text: '目录',              link: '/frontend/vue/' },
-              { text: '01 组合式 API',     link: '/frontend/vue/01-composition-api' },
+              { text: 'Vue 3 笔记',        link: '/frontend/vue/vue' },
             ]
           },
           {
             text: 'React',
             items: [
-              { text: '目录',      link: '/frontend/react/' },
-              { text: '01 Hooks',  link: '/frontend/react/01-hooks' },
+              { text: 'React 笔记',         link: '/frontend/react/react' },
             ]
           },
           {
             text: '工程化',
             items: [
-              { text: '目录',      link: '/frontend/engineering/' },
-              { text: '01 Vite',   link: '/frontend/engineering/01-vite' },
+              { text: '工程化 笔记',        link: '/frontend/engineering/engineering' },
             ]
           },
         ],
@@ -205,28 +200,30 @@ export default withMermaid(
           {
             text: 'Node.js',
             items: [
-              { text: '目录',         link: '/backend/nodejs/' },
-              { text: '01 Express',   link: '/backend/nodejs/01-express' },
+              { text: 'Node.js 笔记',       link: '/backend/nodejs/nodejs' },
             ]
           },
           {
             text: 'Go / Golang',
             items: [
-              { text: '目录',       link: '/backend/golang/' },
-              { text: '01 基础',    link: '/backend/golang/01-basics' },
+              { text: 'Go 笔记',            link: '/backend/golang/golang' },
+            ]
+          },
+          {
+            text: 'Java',
+            items: [
+              { text: 'Java 学习笔记',    link: '/backend/java/java' },
             ]
           },
           {
             text: 'Python',
             items: [
-              { text: '目录',         link: '/backend/python/' },
-              { text: '01 FastAPI',   link: '/backend/python/01-fastapi' },
+              { text: 'Python 笔记',        link: '/backend/python/python' },
             ]
           },
           {
             text: '数据库',
             items: [
-              { text: '目录',          link: '/backend/database/' },
               { text: '📘 MySQL 笔记',  link: '/backend/database/mysql' },
             ]
           },
@@ -246,23 +243,22 @@ export default withMermaid(
             collapsed: false,
             items: [
               { text: 'iOS 总览',      link: '/client/ios/' },
-              { text: '  Swift 语言',   link: '/client/ios/swift/' },
-              { text: '  └ 01 基础',   link: '/client/ios/swift/01-basics' },
-              { text: '  UIKit',        link: '/client/ios/uikit/' },
-              { text: '  └ 01 UIView', link: '/client/ios/uikit/01-uiview' },
-              { text: '  SwiftUI',      link: '/client/ios/swiftui/' },
-              { text: '  └ 01 基础',   link: '/client/ios/swiftui/01-basics' },
-              { text: '  AVFoundation', link: '/client/ios/avfoundation/' },
-              { text: '  └ 01 采集',   link: '/client/ios/avfoundation/01-capture' },
-              { text: '  Metal',        link: '/client/ios/metal/' },
-              { text: '  └ 01 Shader', link: '/client/ios/metal/01-shader' },
+              { text: '  Swift 语言',   link: '/client/ios/swift/swift' },
+              { text: '  └ Swift 笔记',     link: '/client/ios/swift/swift' },
+              { text: '  UIKit',        link: '/client/ios/uikit/uikit' },
+              { text: '  └ UIKit 笔记',     link: '/client/ios/uikit/uikit' },
+              { text: '  SwiftUI',      link: '/client/ios/swiftui/swiftui' },
+              { text: '  └ SwiftUI 笔记',   link: '/client/ios/swiftui/swiftui' },
+              { text: '  AVFoundation', link: '/client/ios/avfoundation/avfoundation' },
+              { text: '  └ AVFoundation 笔记', link: '/client/ios/avfoundation/avfoundation' },
+              { text: '  Metal',        link: '/client/ios/metal/metal' },
+              { text: '  └ Metal 笔记',     link: '/client/ios/metal/metal' },
             ]
           },
           {
             text: '🤖 Android',
             items: [
-              { text: '目录',       link: '/client/android/' },
-              { text: '01 基础',    link: '/client/android/01-basics' },
+              { text: 'Android 笔记',       link: '/client/android/android' },
             ]
           },
         ],
@@ -279,29 +275,25 @@ export default withMermaid(
           {
             text: '操作系统',
             items: [
-              { text: '目录',                    link: '/basic/os/' },
-              { text: '01 进程与线程',           link: '/basic/os/01-process-thread' },
+              { text: '操作系统 笔记',      link: '/basic/os/os' },
             ]
           },
           {
             text: '计算机网络',
             items: [
-              { text: '目录',                  link: '/basic/network/' },
-              { text: '01 TCP / IP 协议族',    link: '/basic/network/01-tcp-ip' },
+              { text: '计算机网络 笔记',    link: '/basic/network/network' },
             ]
           },
           {
             text: '编译原理',
             items: [
-              { text: '目录',                   link: '/basic/principle/' },
-              { text: '01 词法分析与语法分析',  link: '/basic/principle/01-lexer-parser' },
+              { text: '编译原理 笔记',      link: '/basic/principle/principle' },
             ]
           },
           {
             text: '设计模式',
             items: [
-              { text: '目录',              link: '/basic/design-pattern/' },
-              { text: '01 单例模式',       link: '/basic/design-pattern/01-singleton' },
+              { text: '设计模式 笔记',      link: '/basic/design-pattern/design-pattern' },
             ]
           },
         ],
@@ -318,22 +310,19 @@ export default withMermaid(
           {
             text: '数据结构基础',
             items: [
-              { text: '目录',                   link: '/algorithm/basics/' },
-              { text: '01 数组与链表',          link: '/algorithm/basics/01-array-linkedlist' },
+              { text: '数据结构 笔记',     link: '/algorithm/basics/basics' },
             ]
           },
           {
             text: 'LeetCode 题解',
             items: [
-              { text: '目录',              link: '/algorithm/leetcode/' },
-              { text: '01 简单题',         link: '/algorithm/leetcode/01-easy' },
+              { text: 'LeetCode 笔记',     link: '/algorithm/leetcode/leetcode' },
             ]
           },
           {
             text: '进阶算法',
             items: [
-              { text: '目录',                        link: '/algorithm/advance/' },
-              { text: '01 动态规划与图论',          link: '/algorithm/advance/01-dp-graph' },
+              { text: '进阶算法 笔记',      link: '/algorithm/advance/advance' },
             ]
           },
         ],
