@@ -1,6 +1,11 @@
 {
   "devDependencies": {
-    "vitepress": "2.0.0-alpha.19"
+    "@iconify/vue": "^5.0.1",
+    "markdown-it-mathjax3": "^4.3.2",
+    "medium-zoom": "^1.1.0",
+    "mermaid": "^11.16.1",
+    "vitepress": "2.0.0-alpha.19",
+    "vitepress-plugin-mermaid": "^2.0.17"
   },
   "scripts": {
     "docs:dev": "vitepress dev docs",
