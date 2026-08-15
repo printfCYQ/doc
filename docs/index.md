@@ -9,14 +9,19 @@ hero:
 
   actions:
     - theme: brand
+      text: 🤖 AI 人工智能
+      link: /ai/
+    - theme: brand
+      text: 🧑‍💻 后端开发
+      link: /backend/
+    - theme: brand
       text: 🎨 前端开发
       link: /frontend/
     - theme: alt
       text: 📱 客户端
       link: /client/
-    - theme: alt
-      text: 🧑‍💻 后端开发
-      link: /backend/
+
+
 
 features:
   - icon: 🎨
@@ -31,9 +36,15 @@ features:
     link: /backend/
     linkText: 进入后端 →
 
+  - icon: 🤖
+    title: AI 人工智能
+    details: 机器学习、深度学习、大模型（LLM）应用：从环境搭建到 RAG / Agent 的完整学习路线与推荐内容。
+    link: /ai/
+    linkText: 进入 AI →
+
   - icon: 📱
     title: 客户端开发
-    details: 🍎 iOS（Swift / UIKit / SwiftUI / AVFoundation / Metal）、🤖 Android 基础。
+    details: 用 Web 技术栈构建跨平台桌面应用：Electron 与 Tauri 两条路线。
     link: /client/
     linkText: 进入客户端 →
 

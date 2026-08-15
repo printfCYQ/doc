@@ -43,24 +43,36 @@
    2. 按钮样式
    ========================================================================== */
 :root {
+  /* 注意：渐变必须用 background-image 渲染，不能塞进 background-color（会被浏览器丢弃） */
   --vp-button-brand-border: transparent;
-  --vp-button-brand-text: #fff;
-  --vp-button-brand-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-bg: var(--vp-c-brand-1);            /* background-color 用的单色兜底 */
   --vp-button-brand-hover-border: transparent;
-  --vp-button-brand-hover-text: #fff;
-  --vp-button-brand-hover-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
   --vp-button-brand-active-border: transparent;
-  --vp-button-brand-active-text: #fff;
-  --vp-button-brand-active-bg: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: var(--vp-c-brand-3);
 }
 
+/* brand 按钮：白字 + 蓝紫渐变背景
+   - 渐变走 background-image（background-color 不认 linear-gradient，会导致背景透明、白字看不清）
+   - 显式写 color 防止被默认主题覆盖 */
 .VPButton.brand {
+  color: #ffffff;
+  background-image: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.35);
   transition: all 0.25s ease;
 }
 .VPButton.brand:hover {
+  color: #ffffff;
+  background-image: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.45);
+}
+.VPButton.brand:active {
+  color: #ffffff;
+  background-image: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
 }
 
 /* ==========================================================================
@@ -276,4 +288,30 @@
   vertical-align: -0.15em;
   width: 1.1em;
   height: 1.1em;
+}
+
+/* ==========================================================================
+   13. 顶部导航栏小屏折叠（提前收起断点）
+   --------------------------------------------------------------------------
+   问题：站点顶部有 8 个一级导航项，VitePress 默认只在 <768px 才把横向导航
+   收成汉堡菜单，导致 768~1080px 的中等屏幕（平板 / 较窄笔记本窗口）仍然
+   横排，8 个中文项 + 搜索框会溢出、挤压，看起来"没收起"。
+   处理：把收起断点提前到 <1080px——窄屏自动变汉堡（汉堡打开的 VPNavScreen
+   面板内含顶部导航，可正常访问），≥1080px 桌面仍保持横排。
+   用 !important 覆盖 VPNavBar 组件自带的 768px 作用域样式。
+   ========================================================================== */
+@media (max-width: 1079px) {
+  .VPNavBarMenu {
+    display: none !important;
+  }
+  .VPNavBarHamburger {
+    display: flex !important;
+  }
+  /* VitePress 自带的抽屉面板(.VPNavScreen)在 >=768px 为 display:none，
+     但汉堡按钮在 >=768px 也会被隐藏——两者断点一致，所以原生 <768px 点击能弹出。
+     这里把断点提前到 1080px 后，必须同步让抽屉面板在 768~1080px 也能显示，
+     否则 JS 虽然把 isScreenOpen 置 true，面板仍是 display:none，点击无反应。 */
+  .VPNavScreen {
+    display: block !important;
+  }
 }

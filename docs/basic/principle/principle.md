@@ -1,50 +1,246 @@
-# 词法分析与语法分析
+# 编译原理
 
-## 简介
+编译原理研究的是"高级语言写的代码，怎么变成机器能跑的东西"。你写的 `print("hello")`，最终是 CPU 执行的 0/1 指令，中间这一整条翻译流水线，就是编译器干的活。
 
-本节介绍编译原理前端阶段，包括词法分析器（Lexer/Scanner）基于 DFA 拆分 Token，语法分析器（Parser）基于 LL(1) / LR / 递归下降生成 AST 抽象语法树。
+打个比方：编译器像个**翻译官**。你用中文（高级语言）写小说，翻译官先拆词（词法）、再理句子结构（语法）、再理解意思（语义）、再换成英文草稿（中间代码）、润色（优化）、最后排版成出版物（目标机器码）。
 
-## 目录 / 章节
+这篇把编译全流程讲一遍，最后给你一个"手写迷你计算器"的实战思路，以及日常用得到的编译工具（是的，你天天都在用编译器，只是没意识到）。
 
-- 词法分析：正则表达式 → NFA → DFA → Token 流
-- 常见 Token 类型（关键字、标识符、数字、字符串、运算符）
-- 上下文无关文法（CFG）与 BNF/EBNF 表示
-- 递归下降分析法（Recursive Descent）
-- 抽象语法树（AST）定义与构造
-- LL(1) 文法与 FIRST / FOLLOW 集合
+---
 
-## 笔记正文
+## 一、编译器整体流程
 
-::: details 点击展开示例代码
-```typescript
-enum TokenType { NUMBER, PLUS, MINUS, MUL, DIV, LPAREN, RPAREN, EOF }
-
-interface Token { type: TokenType; value?: string }
-
-class Lexer {
-    private pos = 0;
-    constructor(private src: string) {}
-
-    nextToken(): Token {
-        while (this.pos < this.src.length && /\s/.test(this.src[this.pos])) this.pos++;
-        if (this.pos >= this.src.length) return { type: TokenType.EOF };
-        const ch = this.src[this.pos];
-        if (/\d/.test(ch)) {
-            let num = '';
-            while (this.pos < this.src.length && /\d/.test(this.src[this.pos])) num += this.src[this.pos++];
-            return { type: TokenType.NUMBER, value: num };
-        }
-        this.pos++;
-        switch (ch) {
-            case '+': return { type: TokenType.PLUS };
-            case '-': return { type: TokenType.MINUS };
-            case '*': return { type: TokenType.MUL };
-            case '/': return { type: TokenType.DIV };
-            case '(': return { type: TokenType.LPAREN };
-            case ')': return { type: TokenType.RPAREN };
-            default: throw new Error(`Unexpected: ${ch}`);
-        }
-    }
-}
 ```
-:::
+源代码 → [1 词法分析] → [2 语法分析] → [3 语义分析]
+      → [4 中间代码生成] → [5 代码优化] → [6 目标代码生成] → 机器码
+                                              ↑
+                              运行时系统（栈、堆、GC）配合
+```
+
+分两半：
+- **前端（1-3）**：和源语言有关，和机器无关。C、Java 的前端不同，但都产出相似的中间表示。
+- **后端（4-6）**：和机器有关，和源语言无关。同一份中间代码可以生成 x86 或 ARM 的机器码。
+
+---
+
+## 二、词法分析（Lexer / Scanner）
+
+把字符流切成**有意义的单词（Token）**。
+
+```
+输入:  "if (x > 3) { y = x + 1; }"
+输出:  IF  LPAREN  ID(x)  GT  NUM(3)  RPAREN  LBRACE  ID(y)  ASSIGN  ID(x)  PLUS  NUM(1)  SEMI  RBRACE
+```
+
+做法：用**正则表达式**描述每种 Token，构造**有限自动机（NFA → DFA）**来扫描。工程上直接用工具生成（ Lex/Flex、正则引擎）。
+
+### Token 类型
+关键字（if/for/while）、标识符（变量名）、数字、字符串、运算符（+ - * /）、界符（括号分号）。
+
+---
+
+## 三、语法分析（Parser）
+
+Token 流按语法规则组成**语法树（AST，抽象语法树）**。这一步检查"括号配不配、语句合不合法"。
+
+### 文法（CFG / BNF）
+用**上下文无关文法**描述语言结构，比如：
+```
+expr  → expr + term | term
+term  → term * factor | factor
+factor → ( expr ) | NUMBER
+```
+BNF / EBNF 就是这种"左边能被右边替换"的产生式写法。
+
+### 分析方法
+- **递归下降（Recursive Descent）**：手写解析器最常用，每个非终结符写一个函数，直观好调试。
+- **LL(1)**：从左到右、最左推导、看 1 个符号决定。要用 **FIRST / FOLLOW 集合**判断该选哪条规则。
+- **LR / LALR**：更强大（能处理更多文法），`yacc`/`bison` 用的就是它，但手工难写。
+
+### AST 长啥样
+`1 + 2 * 3` 的树：
+```
+      +
+     / \
+    1   *
+       / \
+      2   3
+```
+注意乘法在下面（优先级高），这就是语法分析把"优先级"固化进树结构。
+
+---
+
+## 四、语义分析
+
+语法对不等于意思对。这一步做：
+- **符号表**：记录每个变量/函数在哪定义、类型是什么、作用域多大
+- **类型检查**：`"abc" + 3` 在强类型语言里直接报错
+- **作用域解析**：区分同名变量的内外层
+
+例：`int x = "hello";` 语法没问题，但语义分析会报"类型不匹配"。
+
+---
+
+## 五、中间代码生成（IR）
+
+把 AST 翻成一种**和机器无关、又方便优化**的中间表示。最经典的是**三地址码**：
+```
+t1 = 2 * 3
+t2 = 1 + t1
+x  = t2
+```
+每条指令最多"一个运算符、三个地址"（两个源、一个目标）。像汇编但还不是真汇编，方便后面优化和换目标平台。
+
+---
+
+## 六、代码优化
+
+在不改变结果的前提下让代码更快/更小。常见手法：
+- **常量折叠**：`2 * 3` 直接算成 `6`
+- **公共子表达式消除**：`a*b + a*b` 只算一次
+- **死代码消除**：永远跑不到、结果没人用的代码删掉
+- **循环不变代码外提**：循环里不变的计算提到循环外
+
+```js
+// 优化前
+for (let i = 0; i < n; i++) {
+  y = 3.14 * r * r;   // r 在循环里不变
+  arr[i] = y;
+}
+// 优化后（不变代码外提）
+const y = 3.14 * r * r;
+for (let i = 0; i < n; i++) arr[i] = y;
+```
+
+---
+
+## 七、目标代码生成
+
+把 IR 翻译成**具体机器的汇编/机器码**。两大难题：
+- **指令选择**：`a = b + c` 在 x86 用 `add`，在别的架构可能要load/store 多条
+- **寄存器分配**：CPU 寄存器极少（十几到几十个），但变量很多，得决定谁进寄存器、谁 spill 到内存。图着色算法是经典解法。
+
+```
+; x86 大致长这样
+mov eax, [b]
+add eax, [c]
+mov [a], eax
+```
+
+---
+
+## 八、运行时系统
+
+编译出来的代码跑起来，还得有"地基"配合：
+- **栈帧（Stack Frame）**：每次函数调用压一个栈帧，存参数、局部变量、返回地址。递归就是不断压栈。
+- **堆（Heap）**：`new`/`malloc` 的动态内存，全局管。
+- **静态/动态链接**：自己的代码 + 别人写好的库（如 `printf`），编译时一起打进去是静态链接，运行时才加载是动态链接（`.so`/`.dll`）。
+- **垃圾回收（GC）**：Java/Python/JS 帮你回收没人用的堆内存（引用计数、标记清除等）。
+
+---
+
+## 九、AOT 与 JIT
+
+- **AOT（提前编译）**：像 C/C++/Rust，编译时一次性翻成机器码，跑得快、启动快。缺点是换平台要重新编译。
+- **JIT（即时编译）**：像 Java（JVM）、JavaScript（V8）。先编译成字节码，运行时**边跑边把热点代码编译成机器码**。兼顾"一次编译到处跑"和"跑久了变快"。
+
+V8 跑 JS 就是：源码 → 解析成 AST → 字节码 → 热点函数 JIT 成机器码。你写的每个 JS 文件都被编译过，只是你没看见。
+
+---
+
+## 十、实战：手写一个迷你计算器
+
+不用怕，最迷你版只要三步走（递归下降）：
+
+```python
+# 支持 + - * / 和括号的四则计算器
+import re
+
+tokens = re.findall(r'\d+\.?\d*|[+\-*/()]', "1 + 2 * (3 - 4)")
+pos = 0
+
+def peek(): return tokens[pos] if pos < len(tokens) else None
+def eat(t=None):
+    global pos
+    tok = tokens[pos]; 
+    if t and tok != t: raise SyntaxError(f"expect {t} got {tok}")
+    pos += 1; return tok
+
+def parse_expr():
+    val = parse_term()
+    while peek() in ('+', '-'):
+        op = eat(); rhs = parse_term()
+        val = val + rhs if op == '+' else val - rhs
+    return val
+
+def parse_term():
+    val = parse_factor()
+    while peek() in ('*', '/'):
+        op = eat(); rhs = parse_factor()
+        val = val * rhs if op == '*' else val / rhs
+    return val
+
+def parse_factor():
+    tok = peek()
+    if tok == '(': eat('('); val = parse_expr(); eat(')'); return val
+    return float(eat())
+
+print(parse_expr())   # 输出 1 + 2 * (3 - 4) = -1.0
+```
+
+这就是一个**真·编译器前端微型版**：词法（正则拆 token）→ 语法（递归下降建树并求值）→ 语义（按优先级算）。扩展开就能做真正的语言。
+
+### 日常用得到的编译工具
+- **Lex / Yacc（Flex / Bison）**：老牌词法+语法分析器生成器
+- **ANTLR**：现代 parser 生成器，语法写起来舒服，支持多语言
+- **Babel**：把新 JS 翻成旧 JS（本质就是编译器，前端天天用）
+- **V8 / JVM / LLVM**：你跑代码时真正在编译的后端
+
+---
+
+## 十一、新手最常踩的坑
+
+1. **以为编译器只是"翻译"**：它还做优化、类型检查、内存安排，远不止字面对翻。
+2. **混淆编译和解释**：编译是"先全翻再跑"（C），解释是"边读边跑"（早期 Python/Bash）。现代多是混合（JIT）。
+3. **语法对就以为能跑**：语义分析会拦下类型错误、未声明变量等。
+4. **手写 parser 不处理优先级**：`1+2*3` 算成 9 就是没把优先级建进树。递归下降里 term 调用 factor、expr 调用 term 就是在排优先级。
+5. **AST 和语法树分不清**：AST 去掉了括号、分号这些"只是用来分隔"的废信息，只留结构。
+6. **觉得编译原理没用**：写 DSL、写代码格式化/高亮、写脚手架模板，全用得到。
+
+---
+
+## 十二、练习
+
+1. 用正则 + 递归下降，把上面的迷你计算器加上对负数的支持（如 `-3 + 5`）。
+2. 写出 `a = b * c + b * c` 经过"公共子表达式消除"后的三地址码。
+3. 画 `2 * (3 + 4)` 的 AST，并指出乘法和加法谁在下层（为什么）。
+4. 解释 AOT 和 JIT 的区别，并各举一个你用过的语言/运行时例子。
+5. 为什么 `1 + "2"` 在 JS 里等于 `"12"`（字符串拼接），而在 Java 里直接编译报错？这和语义分析的哪项工作有关？
+
+---
+
+## 十三、速查口诀
+
+- 编译六阶段：词法→语法→语义→中间码→优化→目标码
+- 前端跟语言走，后端跟机器走
+- 词法切 Token（正则+自动机），语法建 AST（递归下降/LL/LR）
+- 语义查类型、建符号表、管作用域
+- 中间码用三地址，优化靠折叠/消重/外提
+- 目标码难在寄存器分配，图着色来救
+- 栈帧管函数调用，堆管动态内存，GC 管回收
+- AOT 一次编译快，JIT 边跑边编译热点
+
+---
+
+## 十四、学习路线
+
+1. 整体流程（本章一）
+2. 词法分析（二）
+3. 语法分析 + AST（三，写个递归下降最涨经验）
+4. 语义分析（四）
+5. 中间代码 + 优化（五、六）
+6. 目标代码 + 运行时（七、八）
+7. AOT/JIT 对比（九）
+8. 进阶：动手写迷你语言（十），或读《编译原理》（龙书/虎书/鲸书）
+
+> 联动：[设计模式](../design-pattern/design-pattern.md)里的解释器模式（Interpreter）就是"用代码表示语法树并执行"，和这里一脉相承；[操作系统](../os/os.md)里的系统调用接口是编译后代码的运行地基。

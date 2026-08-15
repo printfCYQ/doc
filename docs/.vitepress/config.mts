@@ -82,7 +82,7 @@ export default withMermaid(
             { text: 'TypeScript',        link: '/frontend/typescript/typescript' },
             { text: 'Vue 3',             link: '/frontend/vue/vue' },
             { text: 'React',             link: '/frontend/react/react' },
-            { text: '工程化',            link: '/frontend/engineering/engineering' },
+            { text: 'Vite',              link: '/frontend/engineering/vite' },
           ]
         },
         {
@@ -90,7 +90,6 @@ export default withMermaid(
           items: [
             { text: '📂 后端总览',      link: '/backend/' },
             { text: 'Node.js',           link: '/backend/nodejs/nodejs' },
-            { text: 'Go / Golang',       link: '/backend/golang/golang' },
             { text: 'Java',              link: '/backend/java/java' },
             { text: 'Python',            link: '/backend/python/python' },
             { text: '数据库',            link: '/backend/database/mysql' },
@@ -100,13 +99,8 @@ export default withMermaid(
           text: '📱 客户端',
           items: [
             { text: '📂 客户端总览',    link: '/client/' },
-            { text: '🍎 iOS 总览',      link: '/client/ios/' },
-            { text: '  └ Swift 语言',   link: '/client/ios/swift/swift' },
-            { text: '  └ UIKit',        link: '/client/ios/uikit/uikit' },
-            { text: '  └ SwiftUI',      link: '/client/ios/swiftui/swiftui' },
-            { text: '  └ AVFoundation', link: '/client/ios/avfoundation/avfoundation' },
-            { text: '  └ Metal',        link: '/client/ios/metal/metal' },
-            { text: '🤖 Android',       link: '/client/android/android' },
+            { text: '⚡ Electron',      link: '/client/electron/electron' },
+            { text: '🦀 Tauri',         link: '/client/tauri/tauri' },
           ]
         },
         {
@@ -126,6 +120,28 @@ export default withMermaid(
             { text: '数据结构基础',      link: '/algorithm/basics/basics' },
             { text: 'LeetCode 题解',    link: '/algorithm/leetcode/leetcode' },
             { text: '进阶算法',          link: '/algorithm/advance/advance' },
+          ]
+        },
+        {
+          text: '🤖 AI',
+          items: [
+            { text: '📂 AI 总览',        link: '/ai/' },
+            { text: 'AI 学习路线',       link: '/ai/ai' },
+            { text: '大模型应用',        link: '/ai/llm-app' },
+            { text: '开发工具链',        link: '/ai/tooling' },
+          ]
+        },
+        {
+          text: '🐳 运维与部署',
+          items: [
+            { text: '📂 运维与部署总览',  link: '/ops/' },
+            { text: 'Docker',            link: '/ops/docker/docker' },
+            { text: 'Docker Compose',    link: '/ops/docker-compose/docker-compose' },
+            { text: 'Kubernetes',        link: '/ops/k8s/k8s' },
+            { text: 'CI/CD',             link: '/ops/cicd/cicd' },
+            { text: 'Nginx',             link: '/ops/nginx/nginx' },
+            { text: 'Linux 服务器',      link: '/ops/linux/linux' },
+            { text: '监控与日志',        link: '/ops/monitoring/monitoring' },
           ]
         },
         {
@@ -181,9 +197,9 @@ export default withMermaid(
             ]
           },
           {
-            text: '工程化',
+            text: '构建工具',
             items: [
-              { text: '工程化 笔记',        link: '/frontend/engineering/engineering' },
+              { text: 'Vite 笔记',          link: '/frontend/engineering/vite' },
             ]
           },
         ],
@@ -200,13 +216,9 @@ export default withMermaid(
           {
             text: 'Node.js',
             items: [
-              { text: 'Node.js 笔记',       link: '/backend/nodejs/nodejs' },
-            ]
-          },
-          {
-            text: 'Go / Golang',
-            items: [
-              { text: 'Go 笔记',            link: '/backend/golang/golang' },
+              { text: 'Node 原生',          link: '/backend/nodejs/nodejs' },
+              { text: 'Express',            link: '/backend/nodejs/express' },
+              { text: 'NestJS',             link: '/backend/nodejs/nestjs' },
             ]
           },
           {
@@ -219,6 +231,7 @@ export default withMermaid(
             text: 'Python',
             items: [
               { text: 'Python 笔记',        link: '/backend/python/python' },
+              { text: 'Python Web',         link: '/backend/python/python-web' },
             ]
           },
           {
@@ -229,7 +242,7 @@ export default withMermaid(
           },
         ],
 
-        // ── 📱 客户端 (iOS / Android) ──────────────────────────
+        // ── 📱 客户端 (Electron / Tauri) ──────────────────────
         '/client/': [
           {
             text: '📱 客户端',
@@ -239,26 +252,16 @@ export default withMermaid(
             ]
           },
           {
-            text: '🍎 iOS',
+            text: '⚡ Electron',
             collapsed: false,
             items: [
-              { text: 'iOS 总览',      link: '/client/ios/' },
-              { text: '  Swift 语言',   link: '/client/ios/swift/swift' },
-              { text: '  └ Swift 笔记',     link: '/client/ios/swift/swift' },
-              { text: '  UIKit',        link: '/client/ios/uikit/uikit' },
-              { text: '  └ UIKit 笔记',     link: '/client/ios/uikit/uikit' },
-              { text: '  SwiftUI',      link: '/client/ios/swiftui/swiftui' },
-              { text: '  └ SwiftUI 笔记',   link: '/client/ios/swiftui/swiftui' },
-              { text: '  AVFoundation', link: '/client/ios/avfoundation/avfoundation' },
-              { text: '  └ AVFoundation 笔记', link: '/client/ios/avfoundation/avfoundation' },
-              { text: '  Metal',        link: '/client/ios/metal/metal' },
-              { text: '  └ Metal 笔记',     link: '/client/ios/metal/metal' },
+              { text: 'Electron 笔记', link: '/client/electron/electron' },
             ]
           },
           {
-            text: '🤖 Android',
+            text: '🦀 Tauri',
             items: [
-              { text: 'Android 笔记',       link: '/client/android/android' },
+              { text: 'Tauri 笔记',    link: '/client/tauri/tauri' },
             ]
           },
         ],
@@ -327,6 +330,38 @@ export default withMermaid(
           },
         ],
 
+        // ── 🤖 AI ──────────────────────────────────────────
+        '/ai/': [
+          {
+            text: '🤖 AI',
+            collapsed: false,
+            items: [
+              { text: 'AI 总览', link: '/ai/' },
+              { text: 'AI 学习路线', link: '/ai/ai' },
+              { text: '大模型应用', link: '/ai/llm-app' },
+              { text: '开发工具链', link: '/ai/tooling' },
+            ]
+          },
+        ],
+
+        // ── 🐳 运维与部署 ──────────────────────────────────────
+        '/ops/': [
+          {
+            text: '🐳 运维与部署',
+            collapsed: false,
+            items: [
+              { text: '运维与部署总览',   link: '/ops/' },
+              { text: 'Docker 笔记',      link: '/ops/docker/docker' },
+              { text: 'Docker Compose',   link: '/ops/docker-compose/docker-compose' },
+              { text: 'Kubernetes',       link: '/ops/k8s/k8s' },
+              { text: 'CI/CD',            link: '/ops/cicd/cicd' },
+              { text: 'Nginx',            link: '/ops/nginx/nginx' },
+              { text: 'Linux 服务器基础', link: '/ops/linux/linux' },
+              { text: '监控与日志',       link: '/ops/monitoring/monitoring' },
+            ]
+          },
+        ],
+
         // ── 📖 其他页面（首页、示例页等）兜底侧边栏 ───────────
         '/': [
           {
@@ -339,6 +374,8 @@ export default withMermaid(
               { text: '📱 客户端总览',    link: '/client/' },
               { text: '💡 计算机基础',    link: '/basic/' },
               { text: '🔧 算法总览',      link: '/algorithm/' },
+              { text: '🤖 AI 总览',       link: '/ai/' },
+              { text: '🐳 运维与部署',    link: '/ops/' },
               { text: '📖 Markdown 示例', link: '/markdown-examples' },
               { text: '📖 Runtime API',   link: '/api-examples' },
             ]
