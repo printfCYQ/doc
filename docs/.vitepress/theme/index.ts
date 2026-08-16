@@ -48,15 +48,21 @@ export default {
   },
   setup() {
     const route = useRoute()
+    let zoom: ReturnType<typeof mediumZoom> | null = null
 
-    // 路由变化后，初始化 medium-zoom 图片缩放
+    // 路由变化后，初始化 medium-zoom 图片缩放（单实例，避免叠加）
     const initZoom = () => {
+      // 先卸掉上一次的实例，防止多个 zoom 实例叠加导致「关不掉」
+      if (zoom) {
+        zoom.detach()
+        zoom = null
+      }
       nextTick(() => {
         const images = document.querySelectorAll(
           '.vp-doc img:not(.medium-zoom-image):not([data-no-zoom])'
         )
         if (images.length > 0) {
-          mediumZoom(images as NodeListOf<HTMLImageElement>, {
+          zoom = mediumZoom(images as NodeListOf<HTMLImageElement>, {
             margin: 24,
             background: 'rgba(0, 0, 0, 0.75)',
           })

@@ -61,8 +61,8 @@ features:
     linkText: 开始刷题 →
 
   - icon: 📖
-    title: 示例 & 扩展
+    title: 其他 & 示例
     details: 查看 Markdown 所有扩展演示：Iconify 图标、自定义容器、KaTeX 公式、代码组等。
-    link: /markdown-examples
+    link: /other/示例/markdown-examples
     linkText: 查看示例 →
 ---

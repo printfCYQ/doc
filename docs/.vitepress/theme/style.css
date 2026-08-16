@@ -182,9 +182,10 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
 }
 
-/* medium-zoom 遮罩时移除 hover 效果 */
+/* medium-zoom 遮罩时移除 hover 阴影（注意：绝不能覆盖 transform！
+   原写法 transform:none !important 会压住 medium-zoom 的缩放过渡，
+   导致 transitionend 永不触发、关闭监听无法注册，图片「打开后关不掉」。 */
 .medium-zoom-image--opened {
-  transform: none !important;
   box-shadow: none !important;
   border-radius: 4px;
 }
